@@ -1,0 +1,33 @@
+{
+  "originHash" : "c5a6f1874c118ec4b49c72f6ad8a9c96c4b30459e288151941d2a106ea27eaa0",
+  "pins" : [
+    {
+      "identity" : "promisekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/PromiseKit.git",
+      "state" : {
+        "revision" : "8a98e31a47854d3180882c8068cc4d9381bf382d",
+        "version" : "6.22.1"
+      }
+    },
+    {
+      "identity" : "sungrowkit",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:cpageler93/SungrowKit.git",
+      "state" : {
+        "revision" : "79909b5c09617d4a4a5fc830256fa873f0c4095f",
+        "version" : "1.4.0"
+      }
+    },
+    {
+      "identity" : "swiftymodbus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DimaRU/SwiftyModbus.git",
+      "state" : {
+        "revision" : "444406bf0d43bf325073e892256c963e5bf77441",
+        "version" : "2.2.1"
+      }
+    }
+  ],
+  "version" : 3
+}
