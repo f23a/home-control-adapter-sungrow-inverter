@@ -59,10 +59,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 645B77312CA87B4500CB5CA8 /* Build configuration list for PBXNativeTarget "HomeControlAdapterSungrowInverter" */;
 			buildPhases = (
+				64CA8EF02CA886A10013CA4E /* Swift Lint */,
 				645B771E2CA87B4400CB5CA8 /* Sources */,
 				645B771F2CA87B4400CB5CA8 /* Frameworks */,
 				645B77202CA87B4400CB5CA8 /* Resources */,
-				64CA8EF02CA886A10013CA4E /* Swift Lint */,
 			);
 			buildRules = (
 			);
