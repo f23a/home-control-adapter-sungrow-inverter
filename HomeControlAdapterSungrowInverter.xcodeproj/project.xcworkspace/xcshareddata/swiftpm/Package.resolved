@@ -1,6 +1,24 @@
 {
-  "originHash" : "c5a6f1874c118ec4b49c72f6ad8a9c96c4b30459e288151941d2a106ea27eaa0",
+  "originHash" : "f42400b1d8f48320e32c9f416a54eab578f537b198bba0600fe7c0fbdc872bab",
   "pins" : [
+    {
+      "identity" : "home-control-client",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/f23a/home-control-client.git",
+      "state" : {
+        "revision" : "7b6eefb770852c0de4775b165b80cfadbaac75f6",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "home-control-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/f23a/home-control-kit.git",
+      "state" : {
+        "revision" : "524670ebd49e0bca9df2821d4e692676f81d5bbe",
+        "version" : "1.0.0"
+      }
+    },
     {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
@@ -13,7 +31,7 @@
     {
       "identity" : "sungrowkit",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:cpageler93/SungrowKit.git",
+      "location" : "https://github.com/cpageler93/SungrowKit.git",
       "state" : {
         "revision" : "79909b5c09617d4a4a5fc830256fa873f0c4095f",
         "version" : "1.4.0"
