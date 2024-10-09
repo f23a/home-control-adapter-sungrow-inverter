@@ -28,6 +28,8 @@ import SwiftUI
     var isTimerRunning: Bool { updateTimer != nil }
     var updateTimer: Timer?
 
+    private(set) var lastSuccess: Date?
+
     func startTimer() {
         stopTimer()
         updateTimer = .scheduledTimer(withTimeInterval: updateTimerInterval, repeats: true) { [weak self] _ in
@@ -46,7 +48,6 @@ import SwiftUI
     }
 
     private func fireTimer() {
-        print("Fire Timer \(Date())")
         Task {
             do {
                 if !sungrowClient.isConnected {
@@ -82,15 +83,22 @@ import SwiftUI
                     dailyDirectEnergyConsumption: dailyDirectEnergyConsumption.value,
                     dailyBatteryDischargeEnergy: dailyBatteryDischargeEnergy.value
                 )
+
+                func f(_ keyPath: KeyPath<InverterReading, Double>) -> String {
+                    inverterReading.formatted(keyPath, options: .short)
+                }
+
                 print("""
                 Updated Inverter Reading
-                - Solar: \(inverterReading.fromSolar)
-                - Grid: \(inverterReading.fromGrid)
-                - Battery: \(inverterReading.fromBattery)
+                From: Solar: \(f(\.fromSolar)), Grid: \(f(\.fromGrid)), Battery: \(f(\.fromBattery))
+                To: Load: \(f(\.toLoad)), Grid: \(f(\.toGrid)), Battery: \(f(\.toBattery))
+                Battery: \(f(\.batteryLevel))
                 """)
 
                 let storedInverterReading = try await homeControlClient.inverterReading.create(inverterReading)
                 print("Stored Inverter Reading \(storedInverterReading.id)")
+
+                lastSuccess = Date()
 
             } catch {
                 print("Failed to update: \(error)")

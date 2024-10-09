@@ -25,6 +25,12 @@ struct ContentView: View {
                     Button("Stop Update", action: viewModel.stopTimer)
                         .disabled(!viewModel.isTimerRunning)
                 }
+                HStack {
+                    Text("Last Success:")
+                    if let lastSuccess = viewModel.lastSuccess {
+                        Text(lastSuccess, style: .relative)
+                    }
+                }
             }
         }
         .padding()
