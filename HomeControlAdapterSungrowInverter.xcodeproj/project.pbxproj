@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		640C2E832CBB1237008F24B1 /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 640C2E822CBB1237008F24B1 /* HomeControlClient */; };
 		645B77402CA87B8F00CB5CA8 /* SungrowKit in Frameworks */ = {isa = PBXBuildFile; productRef = 645B773F2CA87B8F00CB5CA8 /* SungrowKit */; };
 		645B77432CA87BE700CB5CA8 /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 645B77422CA87BE700CB5CA8 /* HomeControlClient */; };
-		64CA8F852CAAF8710013CA4E /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 64CA8F842CAAF8710013CA4E /* HomeControlClient */; };
+		645C29142CC18ADE009CF49C /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 645C29132CC18ADE009CF49C /* HomeControlClient */; };
+		645C29172CC18C66009CF49C /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 645C29162CC18C66009CF49C /* HomeControlClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,7 +20,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		645B77242CA87B4400CB5CA8 /* HomeControlAdapterSungrowInverter */ = {
+		640C2EB22CBB1F9B008F24B1 /* HomeControlAdapterSungrowInverter */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = HomeControlAdapterSungrowInverter;
 			sourceTree = "<group>";
@@ -32,7 +34,9 @@
 			files = (
 				645B77432CA87BE700CB5CA8 /* HomeControlClient in Frameworks */,
 				645B77402CA87B8F00CB5CA8 /* SungrowKit in Frameworks */,
-				64CA8F852CAAF8710013CA4E /* HomeControlClient in Frameworks */,
+				645C29172CC18C66009CF49C /* HomeControlClient in Frameworks */,
+				645C29142CC18ADE009CF49C /* HomeControlClient in Frameworks */,
+				640C2E832CBB1237008F24B1 /* HomeControlClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,7 +46,7 @@
 		645B77192CA87B4400CB5CA8 = {
 			isa = PBXGroup;
 			children = (
-				645B77242CA87B4400CB5CA8 /* HomeControlAdapterSungrowInverter */,
+				640C2EB22CBB1F9B008F24B1 /* HomeControlAdapterSungrowInverter */,
 				64B8266A2CB6576B005E4D30 /* Frameworks */,
 				645B77232CA87B4400CB5CA8 /* Products */,
 			);
@@ -81,13 +85,15 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				645B77242CA87B4400CB5CA8 /* HomeControlAdapterSungrowInverter */,
+				640C2EB22CBB1F9B008F24B1 /* HomeControlAdapterSungrowInverter */,
 			);
 			name = HomeControlAdapterSungrowInverter;
 			packageProductDependencies = (
 				645B773F2CA87B8F00CB5CA8 /* SungrowKit */,
 				645B77422CA87BE700CB5CA8 /* HomeControlClient */,
-				64CA8F842CAAF8710013CA4E /* HomeControlClient */,
+				640C2E822CBB1237008F24B1 /* HomeControlClient */,
+				645C29132CC18ADE009CF49C /* HomeControlClient */,
+				645C29162CC18C66009CF49C /* HomeControlClient */,
 			);
 			productName = HomeControlAdapterSungrowInverter;
 			productReference = 645B77222CA87B4400CB5CA8 /* HomeControlAdapterSungrowInverter.app */;
@@ -119,7 +125,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				645B773E2CA87B8F00CB5CA8 /* XCRemoteSwiftPackageReference "SungrowKit" */,
-				64CA8F832CAAF8710013CA4E /* XCRemoteSwiftPackageReference "home-control-client" */,
+				645C29152CC18C66009CF49C /* XCRemoteSwiftPackageReference "home-control-client" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 645B77232CA87B4400CB5CA8 /* Products */;
@@ -390,17 +396,21 @@
 				minimumVersion = 1.4.0;
 			};
 		};
-		64CA8F832CAAF8710013CA4E /* XCRemoteSwiftPackageReference "home-control-client" */ = {
+		645C29152CC18C66009CF49C /* XCRemoteSwiftPackageReference "home-control-client" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/f23a/home-control-client.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.1.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		640C2E822CBB1237008F24B1 /* HomeControlClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HomeControlClient;
+		};
 		645B773F2CA87B8F00CB5CA8 /* SungrowKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 645B773E2CA87B8F00CB5CA8 /* XCRemoteSwiftPackageReference "SungrowKit" */;
@@ -410,9 +420,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = HomeControlClient;
 		};
-		64CA8F842CAAF8710013CA4E /* HomeControlClient */ = {
+		645C29132CC18ADE009CF49C /* HomeControlClient */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 64CA8F832CAAF8710013CA4E /* XCRemoteSwiftPackageReference "home-control-client" */;
+			productName = HomeControlClient;
+		};
+		645C29162CC18C66009CF49C /* HomeControlClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 645C29152CC18C66009CF49C /* XCRemoteSwiftPackageReference "home-control-client" */;
 			productName = HomeControlClient;
 		};
 /* End XCSwiftPackageProductDependency section */
