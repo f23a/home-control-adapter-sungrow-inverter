@@ -30,7 +30,10 @@ class ForceChargerJob: Job {
             switch result {
             case .skip(let reason):
                 print("Skip: \(reason)")
-                try await disableForceChargingIfNeeded()
+                if reason == .waitForMinimumOfRanges {
+                    print("Check if force charging disable is needed")
+                    try await disableForceChargingIfNeeded()
+                }
             case .send(let ranges):
                 print("Send \(ranges.count) ranges")
                 try await send(ranges: ranges)
@@ -53,6 +56,13 @@ class ForceChargerJob: Job {
         if forceCharging {
             print("Disable force charging")
             try await sungrowClient.write(request: .forcedCharging(isEnabled: false))
+
+            let message = Message(
+                title: "Zwangsladung deaktiviert",
+                body: "Die Zwangsladung wurde deaktiviert, da keine aktuelle Planung existiert."
+            )
+            let createdMessage = try await homeControlClient.messages.create(message)
+            try await homeControlClient.messages.sendPushNotifications(id: createdMessage.id)
         }
     }
 
@@ -68,6 +78,13 @@ class ForceChargerJob: Job {
         try await sungrowClient.write(request: .forcedCharging2(sungrowForcedCharging2))
         try await updateRange(range2)
         try await sungrowClient.write(request: .forcedCharging(isEnabled: true))
+
+        let message = Message(
+            title: "Zwangsladung aktiviert",
+            body: "Die Zwangsladung wurde aktiviert. \(sungrowForcedCharging1.debugDescription) \(sungrowForcedCharging2.debugDescription)"
+        )
+        let createdMessage = try await homeControlClient.messages.create(message)
+        try await homeControlClient.messages.sendPushNotifications(id: createdMessage.id)
     }
 
     private func updateRange(_ storedRange: Stored<ForceChargingRange>?) async throws {
