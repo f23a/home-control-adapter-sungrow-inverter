@@ -8,10 +8,12 @@
 import Foundation
 import HomeControlClient
 import HomeControlKit
+import  Logging
 import SungrowKit
 
 @Observable
 class UpdateInverterReadingJob: Job {
+    private let logger = Logger(adapterSungrowInverter: "update-inverter-reading-job")
     private var sungrowClient: SungrowClient
     private var homeControlClient: HomeControlClient
     private(set) var lastSuccess: Date?
@@ -27,7 +29,7 @@ class UpdateInverterReadingJob: Job {
     override func run() async {
         do {
             if !sungrowClient.isConnected {
-                print("Connect Sungrow client")
+                logger.info("Connect Sungrow client")
                 try sungrowClient.connect()
             }
 
@@ -64,7 +66,7 @@ class UpdateInverterReadingJob: Job {
                 inverterReading.formatted(keyPath, options: .short)
             }
 
-            print("""
+            logger.info("""
             Updated Inverter Reading
             From: Solar: \(f(\.fromSolar)), Grid: \(f(\.fromGrid)), Battery: \(f(\.fromBattery))
             To: Load: \(f(\.toLoad)), Grid: \(f(\.toGrid)), Battery: \(f(\.toBattery))
@@ -72,12 +74,12 @@ class UpdateInverterReadingJob: Job {
             """)
 
             let storedInverterReading = try await homeControlClient.inverterReading.create(inverterReading)
-            print("Stored Inverter Reading \(storedInverterReading.id)")
+            logger.info("Stored Inverter Reading \(storedInverterReading.id)")
 
             lastSuccess = Date()
             lastStoredInverterReading = storedInverterReading
         } catch {
-            print("Failed to update: \(error)")
+            logger.error("Failed to update: \(error)")
         }
     }
 }

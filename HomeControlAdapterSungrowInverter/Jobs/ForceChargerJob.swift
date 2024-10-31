@@ -8,9 +8,11 @@
 import Foundation
 import HomeControlClient
 import HomeControlKit
+import Logging
 import SungrowKit
 
 class ForceChargerJob: Job {
+    private let logger = Logger(adapterSungrowInverter: "force-charger-job")
     private var sungrowClient: SungrowClient
     private var homeControlClient: HomeControlClient
 
@@ -23,29 +25,29 @@ class ForceChargerJob: Job {
 
     override func run() async {
         do {
-            print("Run force charger")
+            logger.info("Run force charger")
             let forceCharger = ForceCharger(provider: self)
 
             let result = try await forceCharger.execute()
             switch result {
             case .skip(let reason):
-                print("Skip: \(reason)")
+                logger.info("Skip: \(reason)")
                 if reason == .waitForMinimumOfRanges {
-                    print("Check if force charging disable is needed")
+                    logger.info("Check if force charging disable is needed")
                     try await disableForceChargingIfNeeded()
                 }
             case .send(let ranges):
-                print("Send \(ranges.count) ranges")
+                logger.info("Send \(ranges.count) ranges")
                 try await send(ranges: ranges)
             }
         } catch {
-            print("Failed to execute force charger \(error)")
+            logger.error("Failed to execute force charger \(error)")
         }
     }
 
     private func connectSungrowClientIfNeeded() throws {
         if !sungrowClient.isConnected {
-            print("Connect Sungrow client")
+            logger.info("Connect Sungrow client")
             try sungrowClient.connect()
         }
     }
@@ -54,7 +56,7 @@ class ForceChargerJob: Job {
         try connectSungrowClientIfNeeded()
         let forceCharging = try await sungrowClient.read(request: .forcedCharging)
         if forceCharging {
-            print("Disable force charging")
+            logger.info("Disable force charging")
             try await sungrowClient.write(request: .forcedCharging(isEnabled: false))
 
             let message = Message(
@@ -91,7 +93,7 @@ class ForceChargerJob: Job {
         guard let storedRange else { return }
         var range = storedRange.value
         range.state = .sent
-        print("Update range to state sent")
+        logger.info("Update range to state sent")
         try await homeControlClient.forceChargingRanges.update(id: storedRange.id, range)
     }
 }

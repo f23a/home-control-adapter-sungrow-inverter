@@ -12,6 +12,7 @@
 		645B77432CA87BE700CB5CA8 /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 645B77422CA87BE700CB5CA8 /* HomeControlClient */; };
 		645C29142CC18ADE009CF49C /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 645C29132CC18ADE009CF49C /* HomeControlClient */; };
 		645C29172CC18C66009CF49C /* HomeControlClient in Frameworks */ = {isa = PBXBuildFile; productRef = 645C29162CC18C66009CF49C /* HomeControlClient */; };
+		64C0FD052CCD695900F1D13A /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 64C0FD042CCD695900F1D13A /* Logging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64C0FD052CCD695900F1D13A /* Logging in Frameworks */,
 				645B77432CA87BE700CB5CA8 /* HomeControlClient in Frameworks */,
 				645B77402CA87B8F00CB5CA8 /* SungrowKit in Frameworks */,
 				645C29172CC18C66009CF49C /* HomeControlClient in Frameworks */,
@@ -94,6 +96,7 @@
 				640C2E822CBB1237008F24B1 /* HomeControlClient */,
 				645C29132CC18ADE009CF49C /* HomeControlClient */,
 				645C29162CC18C66009CF49C /* HomeControlClient */,
+				64C0FD042CCD695900F1D13A /* Logging */,
 			);
 			productName = HomeControlAdapterSungrowInverter;
 			productReference = 645B77222CA87B4400CB5CA8 /* HomeControlAdapterSungrowInverter.app */;
@@ -126,6 +129,7 @@
 			packageReferences = (
 				645B773E2CA87B8F00CB5CA8 /* XCRemoteSwiftPackageReference "SungrowKit" */,
 				645C29152CC18C66009CF49C /* XCRemoteSwiftPackageReference "home-control-client" */,
+				64C0FD032CCD695900F1D13A /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 645B77232CA87B4400CB5CA8 /* Products */;
@@ -404,6 +408,14 @@
 				minimumVersion = 1.1.1;
 			};
 		};
+		64C0FD032CCD695900F1D13A /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -428,6 +440,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 645C29152CC18C66009CF49C /* XCRemoteSwiftPackageReference "home-control-client" */;
 			productName = HomeControlClient;
+		};
+		64C0FD042CCD695900F1D13A /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64C0FD032CCD695900F1D13A /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
