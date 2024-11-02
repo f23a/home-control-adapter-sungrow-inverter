@@ -13,11 +13,11 @@ import SungrowKit
 
 class ForceChargerJob: Job {
     private let logger = Logger(adapterSungrowInverter: "force-charger-job")
-    private var sungrowClient: SungrowClient
+    private var sungrow: ForceChargerSungrow
     private var homeControlClient: HomeControlClient
 
-    init(sungrowClient: SungrowClient, homeControlClient: HomeControlClient) {
-        self.sungrowClient = sungrowClient
+    init(sungrow: ForceChargerSungrow, homeControlClient: HomeControlClient) {
+        self.sungrow = sungrow
         self.homeControlClient = homeControlClient
 
         super.init(maxAge: 10.seconds)
@@ -45,19 +45,12 @@ class ForceChargerJob: Job {
         }
     }
 
-    private func connectSungrowClientIfNeeded() throws {
-        if !sungrowClient.isConnected {
-            logger.info("Connect Sungrow client")
-            try sungrowClient.connect()
-        }
-    }
-
     private func disableForceChargingIfNeeded() async throws {
-        try connectSungrowClientIfNeeded()
-        let forceCharging = try await sungrowClient.read(request: .forcedCharging)
+        let forceCharging = try await sungrow.isForceChargingEnabled()
+        logger.info("Force Charging is \(forceCharging ? "enabled" : "disabled")")
         if forceCharging {
             logger.info("Disable force charging")
-            try await sungrowClient.write(request: .forcedCharging(isEnabled: false))
+            try await sungrow.disableForceCharging()
 
             let message = Message(
                 title: "Zwangsladung deaktiviert",
@@ -69,18 +62,18 @@ class ForceChargerJob: Job {
     }
 
     private func send(ranges: [Stored<ForceChargingRange>]) async throws {
-        try connectSungrowClientIfNeeded()
         let range1 = ranges[safe: 0]
         let range2 = ranges[safe: 1]
         let sungrowForcedCharging1 = range1?.value.sungrowForcedCharging() ?? .empty
         let sungrowForcedCharging2 = range2?.value.sungrowForcedCharging() ?? .empty
 
-        try await sungrowClient.write(request: .forcedCharging1(sungrowForcedCharging1))
+        try await sungrow.enableForceCharging(
+            forcedCharging1: sungrowForcedCharging1,
+            forcedCharging2: sungrowForcedCharging2
+        )
         try await updateRange(range1)
-        try await sungrowClient.write(request: .forcedCharging2(sungrowForcedCharging2))
         try await updateRange(range2)
-        try await sungrowClient.write(request: .forcedCharging(isEnabled: true))
-
+        
         let message = Message(
             title: "Zwangsladung aktiviert",
             body: "Die Zwangsladung wurde aktiviert. \(sungrowForcedCharging1.debugDescription) \(sungrowForcedCharging2.debugDescription)"
