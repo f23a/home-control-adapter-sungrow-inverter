@@ -8,7 +8,7 @@ let package = Package(
     platforms: [.macOS(.v15)],
     dependencies: [
 //        .package(path: "../home-control-kit"),
-        .package(url: "https://github.com/f23a/home-control-client.git", from: "1.2.1"),
+        .package(url: "https://github.com/f23a/home-control-client.git", from: "1.4.0"),
         .package(url: "https://github.com/cpageler93/SungrowKit.git", from: "1.4.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.6.1"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0")

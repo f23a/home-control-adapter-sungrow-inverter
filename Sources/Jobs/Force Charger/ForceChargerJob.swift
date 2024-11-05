@@ -53,6 +53,7 @@ class ForceChargerJob: Job {
             try await sungrow.disableForceCharging()
 
             let message = Message(
+                type: .inverterForceChargingDisabled,
                 title: "Zwangsladung deaktiviert",
                 body: "Die Zwangsladung wurde deaktiviert, da keine aktuelle Planung existiert."
             )
@@ -73,8 +74,9 @@ class ForceChargerJob: Job {
         )
         try await updateRange(range1)
         try await updateRange(range2)
-        
+
         let message = Message(
+            type: .inverterForceChargingEnabled,
             title: "Zwangsladung aktiviert",
             body: "Die Zwangsladung wurde aktiviert. \(sungrowForcedCharging1.debugDescription) \(sungrowForcedCharging2.debugDescription)"
         )
