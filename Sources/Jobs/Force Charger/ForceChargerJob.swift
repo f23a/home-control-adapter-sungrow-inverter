@@ -96,12 +96,15 @@ class ForceChargerJob: Job {
 extension ForceChargerJob: ForceChargerRangeProvider {
     func forceChargingRanges(in range: Range<Date>) async throws -> [Stored<ForceChargingRange>] {
         let query = ForceChargingRangeQuery(
-            range: .init(
-                startsAt: range.lowerBound,
-                endsAt: range.upperBound
-            )
+            pagination: .init(page: 0, per: 1000),
+            filter: [
+                .startsAt(.init(value: range.lowerBound, method: .greaterThanOrEqual)),
+                .endsAt(.init(value: range.upperBound, method: .lessThanOrEqual))
+            ],
+            sort: .init(value: .startsAt, direction: .ascending)
         )
-        return try await homeControlClient.forceChargingRanges.query(query)
+        let page = try await homeControlClient.forceChargingRanges.query(query)
+        return page.items
     }
 }
 
