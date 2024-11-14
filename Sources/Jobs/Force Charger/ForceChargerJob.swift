@@ -98,8 +98,8 @@ extension ForceChargerJob: ForceChargerRangeProvider {
         let query = ForceChargingRangeQuery(
             pagination: .init(page: 0, per: 1000),
             filter: [
-                .startsAt(.init(value: range.lowerBound, method: .greaterThanOrEqual)),
-                .endsAt(.init(value: range.upperBound, method: .lessThanOrEqual))
+                .startsAt(.init(value: range.upperBound, method: .lessThanOrEqual)),
+                .endsAt(.init(value: range.lowerBound, method: .greaterThanOrEqual))
             ],
             sort: .init(value: .startsAt, direction: .ascending)
         )
