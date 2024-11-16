@@ -8,11 +8,12 @@
 import Foundation
 import HomeControlClient
 import HomeControlKit
+import HomeControlLogging
 import Logging
 import SungrowKit
 
 class ForceChargerJob: Job {
-    private let logger = Logger(adapterSungrowInverter: "force-charger-job")
+    private let logger = Logger(homeControl: "adapter-sungrow-inverter.force-charger-job")
     private var sungrow: ForceChargerSungrow
     private var homeControlClient: HomeControlClient
 

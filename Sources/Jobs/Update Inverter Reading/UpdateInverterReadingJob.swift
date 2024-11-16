@@ -8,12 +8,13 @@
 import Foundation
 import HomeControlClient
 import HomeControlKit
-import  Logging
+import HomeControlLogging
+import Logging
 import SungrowKit
 
 @Observable
 class UpdateInverterReadingJob: Job {
-    private let logger = Logger(adapterSungrowInverter: "update-inverter-reading-job")
+    private let logger = Logger(homeControl: "adapter-sungrow-inverter.update-inverter-reading-job")
     private var sungrow: UpdateInverterReadingSungrow
     private var homeControlClient: HomeControlClient
     private(set) var lastSuccess: Date?

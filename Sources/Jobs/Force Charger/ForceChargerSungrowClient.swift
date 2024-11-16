@@ -5,11 +5,12 @@
 //  Created by Christoph Pageler on 01.11.24.
 //
 
-import SungrowKit
+import HomeControlLogging
 import Logging
+import SungrowKit
 
 struct ForceChargerSungrowClient: ForceChargerSungrow {
-    private let logger = Logger(adapterSungrowInverter: "force-charger-sungrow-fake")
+    private let logger = Logger(homeControl: "adapter-sungrow-inverter.force-charger-sungrow-fake")
     let sungrowClient: SungrowClient
 
     private func connectSungrowClientIfNeeded() throws {

@@ -9,12 +9,13 @@ import ArgumentParser
 import Foundation
 import HomeControlClient
 import HomeControlKit
-import SungrowKit
+import HomeControlLogging
 import Logging
+import SungrowKit
 
 @main
 struct MainCommand: AsyncParsableCommand {
-    private static let logger = Logger(adapterSungrowInverter: "main-command")
+    private static let logger = Logger(homeControl: "adapter-sungrow-inverter.main-command")
 
     @Flag(help: "Run without update inverter reading job")
     var noUpdate = false
@@ -26,7 +27,7 @@ struct MainCommand: AsyncParsableCommand {
     var development = false
 
     func run() async throws {
-        LoggingSystem.bootstrap { HomeControlLogHandler(logLevel: .info, label: $0) }
+        LoggingSystem.bootstrapHomeControl()
 
         // Load environment from .env.json
         let dotEnv = try DotEnv.fromWorkingDirectory()
