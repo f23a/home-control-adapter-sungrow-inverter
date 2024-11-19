@@ -32,9 +32,11 @@ class ForceChargerJob: Job {
             let result = try await forceCharger.execute()
             switch result {
             case .skip(let reason):
-                logger.info("Skip: \(reason)")
-                if reason == .waitForMinimumOfRanges {
-                    logger.info("Check if force charging disable is needed")
+                switch reason {
+                case .containsSent:
+                    logger.info("Skip Reason: \(reason). We don't touch anything")
+                case .waitForThreshold:
+                    logger.info("Skip Reason: \(reason). Check if force charging disable is needed")
                     try await disableForceChargingIfNeeded()
                 }
             case .send(let ranges):
@@ -47,20 +49,21 @@ class ForceChargerJob: Job {
     }
 
     private func disableForceChargingIfNeeded() async throws {
-        let forceCharging = try await sungrow.isForceChargingEnabled()
-        logger.info("Force Charging is \(forceCharging ? "enabled" : "disabled")")
-        if forceCharging {
-            logger.info("Disable force charging")
-            try await sungrow.disableForceCharging()
-
-            let message = Message(
-                type: .inverterForceChargingDisabled,
-                title: "Zwangsladung deaktiviert",
-                body: "Die Zwangsladung wurde deaktiviert, da keine aktuelle Planung existiert."
-            )
-            let createdMessage = try await homeControlClient.messages.create(message)
-            try await homeControlClient.messages.sendPushNotifications(id: createdMessage.id)
+        guard try await sungrow.isForceChargingEnabled() else {
+            logger.info("Force charging disabled, return early.")
+            return
         }
+
+        logger.info("Disable force charging")
+        try await sungrow.disableForceCharging()
+
+        let message = Message(
+            type: .inverterForceChargingDisabled,
+            title: "Zwangsladung deaktiviert",
+            body: "Die Zwangsladung wurde deaktiviert, da keine aktuelle Planung existiert."
+        )
+        let createdMessage = try await homeControlClient.messages.create(message)
+        try await homeControlClient.messages.sendPushNotifications(id: createdMessage.id)
     }
 
     private func send(ranges: [Stored<ForceChargingRange>]) async throws {
