@@ -5,6 +5,7 @@
 //  Created by Christoph Pageler on 31.10.24.
 //
 
+import Foundation
 import HomeControlClient
 import HomeControlKit
 
@@ -13,6 +14,14 @@ struct UpdateInverterReadingSungrowFake: UpdateInverterReadingSungrow {
     let homeControlClient: HomeControlClient
 
     func inverterReading() async throws -> InverterReading {
-        try await homeControlClient.inverterReading.latest().value
+        guard var latest = try await homeControlClient.inverterReading.latest()?.value else {
+            throw UpdateInverterReadingSungrowFakeError.noLatest
+        }
+        latest.readingAt = Date()
+        return latest
     }
+}
+
+enum UpdateInverterReadingSungrowFakeError: Error {
+    case noLatest
 }
