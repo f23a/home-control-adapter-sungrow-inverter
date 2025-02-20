@@ -41,7 +41,13 @@ struct MainCommand: AsyncParsableCommand {
         let forceChargerSungrow: ForceChargerSungrow
         if development {
             Self.logger.info("Run in development mode: FAKE Sungrow Inverter")
-            updateInverterReadingSungrow = UpdateInverterReadingSungrowFake(homeControlClient: homeControlClient)
+
+            // Prepare fake home control client
+            let fakeHost = try dotEnv.require("FAKE_IP")
+            var fakeHomeControlClient = HomeControlClient.init(host: fakeHost, port: 8080)!
+            fakeHomeControlClient.authToken = try dotEnv.require("FAKE_AUTH_TOKEN")
+
+            updateInverterReadingSungrow = UpdateInverterReadingSungrowFake(homeControlClient: fakeHomeControlClient)
             forceChargerSungrow = ForceChargerSungrowFake()
         } else {
             Self.logger.info("Run in production mode: REAL Sungrow Inverter")
